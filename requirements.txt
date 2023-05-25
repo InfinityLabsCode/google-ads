@@ -1,0 +1,17 @@
+#Flask
+flask[async]
+python-dotenv
+PyJWT
+flask-cors
+
+#Langchain
+langchain==0.0.141
+openai
+pinecone-client
+tiktoken
+gunicorn
+bs4
+
+
+#files
+unstructured

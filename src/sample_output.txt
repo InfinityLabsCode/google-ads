@@ -1,0 +1,205 @@
+Parsing website https://www.greystar.com/ starts
+Parsing website https://www.greystar.com/ ends
+
+Going to call OpenAI, step 1: Start
+Going to call OpenAI, step 1: End
+
+Step 1: Service
+
+Going to call OpenAI, step 2: Start
+Going to call OpenAI, step 2: End
+
+Step 2: Non-sensitive.
+
+Going to call OpenAI, step 3: Start
+Going to call OpenAI, step 3: End
+
+Step 3: Tenant.
+
+Going to call OpenAI, step 4: Start
+Going to call OpenAI, step 4: End
+
+Step 4: The name of the business is Greystar.
+
+Going to call OpenAI, step 5: Start  
+Going to call OpenAI, step 5: End
+
+Step 5:
+1. Apartments
+2. Property Management
+3. Investment Management
+4. Development and Construction
+5. Active Adult
+6. Student Housing
+7. Logistics
+8. Modular
+9. North America
+10. Europe
+
+
+Parsing website https://www.greystar.com/business-services/property-management starts
+Parsing website https://www.greystar.com/business-services/property-management ends
+
+Going to call OpenAI, step 6: Start
+Going to call OpenAI, step 6: End
+
+Step 6: Property Management (specific service)
+
+Going to call OpenAI, step 7: Start
+Going to call OpenAI, step 7: End
+
+Step 7:
+
+Contacts: Contact form on the website, phone number, email address.
+
+Offer: No special offers, discounts, or promotions found on the page.
+
+Guarantee: No mention of a guarantee or warranty found on the page.
+
+Price: No prices mentioned on the page.
+
+USP: Global leader in rental housing, end-to-end property management services, innovative business model, world-class people and systems, customer service and satisfaction.
+
+Call to Action: "Get Connected" to contact the business, "Browse Listings" to search for apartments.
+
+
+Going to call OpenAI, step 8: Start
+Going to call OpenAI, step 8: End
+
+Step 8:
+
+1. Fear of choosing a vendor who is unreliable and may not show up on time or complete the job as promised.
+2. Worry that the vendor may not have the necessary skills or experience to perform the service effectively.
+3. Fear of being overcharged or taken advantage of by the vendor.
+4. Worry that the vendor may damage the property or belongings during the service.
+5. Fear of choosing a vendor who is not licensed or insured, which could lead to liability issues.
+6. Worry that the vendor may not be able to accommodate specific scheduling needs or preferences.
+7. Fear of choosing a vendor who has a poor reputation or negative reviews from previous customers.
+8. Worry that the vendor may not be able to provide the level of quality or attention to detail desired.
+9. Fear of choosing a vendor who may not be able to handle unexpected issues or emergencies during the service.
+10. Worry that the vendor may not be able to provide clear and effective communication throughout the service process.
+
+
+Going to call OpenAI, step 9: Start
+Going to call OpenAI, step 9: End
+
+Step 9:
+As an AI language model, I do not have personal opinions or beliefs. However, based on general human behavior and psychology, a tenant who buys a service and receives it to a very high standard might feel the following emotions and feelings:
+
+1. Satisfaction: The tenant may feel satisfied that they received the service they paid for and that it met or exceeded their expectations.
+
+2. Gratitude: The tenant may feel grateful to the service provider for delivering a high-quality service and making their life easier.
+
+3. Trust: The tenant may feel more trusting of the service provider and may be more likely to use their services again in the future.
+
+4. Confidence: The tenant may feel more confident in their decision to choose that particular service provider and may recommend them to others.
+
+5. Peace of mind: The tenant may feel a sense of relief and peace of mind knowing that they received a high-quality service and that their needs were met.
+
+6. Happiness: The tenant may feel happy and content knowing that they received a service that made their life better or easier in some way.
+
+
+
+-------------------------------------------------CSV agent result based on the keyword `Property Management`-------------------------------
+> Entering new AgentExecutor chain...
+
+Thought: I need to filter the rows, sort them, and select the top 5.
+Action: python_repl_ast
+Action Input: df[df['ad_group_ad.ad.responsive_search_ad.headlines'].str.contains('Property Management')].sort_values(by='RankWeight', ascending=False).head(5)
+Observation:        customer.id               customer.name  campaign.id                           campaign.name  ...                           CCA-Index Count  Rank RankWeight
+56338   4613094582                    John Pye   8771646929    Search | Hornsby NB | Alpha Keywords  ...   '46130945828771646929105924300871     2     1        100
+51157   3990825398  Foliolens - Daniel Godbout  13209602355                Website traffic-Search-1  ...  '399082539813209602355131228823348     1     0        100
+56339   4613094582                    John Pye   8771646929    Search | Hornsby NB | Alpha Keywords  ...   '46130945828771646929105924300871     2     2        100
+56328   4613094582                    John Pye  11807828137  Search | Hornsby NB | Branded Keywords  ...  '461309458211807828137117675394951     1     0        100
+51639   4116317689            Watson Integrity  19812826961         [RENTALS]You're in Good Company  ...  '411631768919812826961152643555011     1     0        100
+
+[5 rows x 24 columns]
+Thought: I now know the final answer
+Final Answer: The top 5 rows with the highest RankWeight values that contain the substring 'Property Management' in the ad_group_ad.ad.responsive_search_ad.headlines column.
+-------------------------------------------------CSV agent result based on the keyword `Property Management`-------------------------------
+
+
+> Finished chain.
+
+Similar Ads filtered based on the RankWeight and coming from the xl sheet
+
+
+Ads:1 Headline 1: "Property Management", Headline 2: "Best Rental Agencies Near Me", Headline 3: "Get Your Free Rental Appraisal"
+Description: Comprehensive approach to property management, providing every service our clients need.;We manage our client's properties just like we manage our own. Schedule your consultation!;We take care of everything ensuring your confidence in our service;We make showcasing your property easy with full video walkthroughs & 3D tours.
+Ads:2 Headline 1: "Property Management Software", Headline 2: "Online Rent Collection", Headline 3: "Property Rental Estate"
+Description: Automate Property Management to Save Time and Money.;Eliminate Repetitive and Time Consuming Data Entry with Automatic Document Organization;Property Management Software for Landlords, Real Estate Owners, and Property Managers;Foliolens: Property Management Automation Software
+Ads:3 Headline 1: "Property Management", Headline 2: "Best Rental Agencies Near Me", Headline 3: "Get Your Free Rental Appraisal"
+Description: We Believe in Unsurpassed Care in a Sale or Management of Your Property.;We Know How to Achieve the Very Best Result for Your Property Sale. Contact Us Today!;We Deliver Peace of Mind and Financial Security. Schedule Your Consultation Now!
+Ads:4 Headline 1: "#1 Property Management", Headline 2: "Local Property Management", Headline 3: "Use Our Award-Winning Service"
+Description: Comprehensive approach to property management, providing every service our clients need.;We manage our client's properties just like we manage our own. Schedule your consultation!;We Take Care Of Everything Ensuring Your Confidence In Our Service;John Pye Real Estate: We take great care in finding ideal tenant match. Contact Us Today!
+Ads:5 Headline 1: "Property Management Experts", Headline 2: "Watson Real Estate", Headline 3: "Watson Property Management"
+Description: We can help you set the right rental price and find the best tenants for your property.;We can handle all aspects of rent collection and accounting. Let us do the heavy lifting.;We can handle all aspects of the tenant screening process, getting you the best tenants.;We ensure that your property is well-maintained and that any issues are addressed promptly      
+
+Calling OpenAI API: Step 10 - Start
+Calling OpenAI API: Step 10 - End
+
+Step 10:
+
+1. Ad 1
+2. Ad 3
+3. Ad 4
+4. Ad 5
+5. Ad 2
+
+
+Calling OpenAI API: Step 11 - Start
+Calling OpenAI API: Step 11 - End
+
+Step 11:
+Headlines:
+1. Find Your Dream Home with Greystar
+2. Experience Luxury Living with Greystar
+3. Discover Your Perfect Apartment with Greystar
+4. Trust Greystar for Expert Property Management
+5. Your Ideal Home Awaits with Greystar
+6. Greystar: The Ultimate Rental Housing Solution
+7. Simplify Your Life with Greystar Property Management
+8. Greystar: Your Partner in Property Investment
+9. Live in Style with Greystar Apartments
+10. Greystar: The Global Leader in Rental Housing
+11. Find Your Next Home with Greystar
+12. Greystar: Your One-Stop-Shop for Property Management
+
+Descriptions:
+1. Explore our extensive range of rental properties today.
+2. Experience the ultimate in comfort and convenience with Greystar.
+3. Let us take care of all your property management needs.
+4. Discover the perfect home for you with Greystar.
+5. Trust us to provide expert guidance and support throughout your rental journey.
+
+
+Calling OpenAI API: Step 12 - Start
+Calling OpenAI API: Step 12 - End
+
+Step 12:
+
+Headlines:
+1. Find Your Dream Home with Greystar
+2. Experience Luxury Living with Greystar
+3. Discover Your Perfect Apartment with Greystar
+4. Trust Greystar for Expert Property Management
+5. Your Ideal Home Awaits with Greystar
+6. Greystar: The Ultimate Rental Housing Solution
+7. Simplify Your Life with Greystar Property Management
+8. Greystar: Your Partner in Property Investment
+9. Live in Style with Greystar Apartments
+10. Greystar: The Global Leader in Rental Housing
+11. Find Your Next Home with Greystar
+12. Greystar: Your One-Stop-Shop for Property Management
+
+Descriptions:
+1. Explore our extensive range of rental properties today.
+2. Experience the ultimate in comfort and convenience with Greystar.
+3. Let us take care of all your property management needs.
+4. Discover the perfect home for you with Greystar.
+5. Trust us to provide expert guidance and support throughout your rental journey.
+Calling OpenAI API: Step 13 - Start
+Calling OpenAI API: Step 13 - End
+1. "Savor the Sweet Savings: Stock Up on Sumptuous Snacks!"
+2. "Get Glowing Skin with our Gorgeous Green Tea Infusion!"
+3. "Experience the Ultimate Comfort with our Cozy Cashmere Collection!"
