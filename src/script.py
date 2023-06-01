@@ -76,7 +76,7 @@ class LangchainService:
         except Exception as ex:
             return ex
         
-    def show_similiar_ads(self, keyword_name):
+    def show_winning_ads(self, keyword_name):
         """
         Performs summarization on the given data.
 
@@ -95,7 +95,7 @@ class LangchainService:
         except Exception as ex:
             return ex
     
-    def get_similiar_ads(self, keyword):
+    def get_winning_ads(self, keyword):
         """
         Retrieves similar ads based on the provided keyword.
 
@@ -448,9 +448,38 @@ class OpenAIService:
         except Exception as ex:
             return str(ex)
     
-    def run_step_11(self, business_name, content):
+    def run_step_11(self, winning_ads):
         """
         Runs step 11 of the process.
+
+        Args:
+            winning_ads (str): A string containing the winning ads that have been successful in the industry for other advertisers.
+
+        Returns:
+            str: The generated response for step 12.
+        """
+        # Prepare the prompt for Step 12
+        prompt = f"""
+        I will now provide you with ads that have been successful in this industry for other advertisers delimited by ```.  
+        You should consider this in the subsequent tasks.  Acknowledge with "ok".
+        ```{winning_ads}```
+
+        """
+
+        try:
+            print("Calling OpenAI API: Step 11 - Start")
+            response = self.__get_completion(prompt, temperature=0)
+            print("Calling OpenAI API: Step 11 - End")
+            return response
+        except openai.error.RateLimitError:
+            return "Facing rate limit quota issue. Please try again later."
+        except Exception as ex:
+            return str(ex)
+
+    
+    def run_step_12(self, business_name, content, industry):
+        """
+        Runs step 12 of the process.
 
         Args:
             business_name (str): The name of the business.
@@ -461,7 +490,7 @@ class OpenAIService:
         """
         # Prepare the prompt for Step 11
         prompt = f"""
-        Now using all your knowledge about {business_name}, their page content:```{content}``` and competitor ads, you are to take on the role of Google Ads copywriter.  You are highly experienced and understand how to use emotion, urgency, calls to action, and other direct response mechanisms.  Your job is to write ad copy with the goal of being more likely to get the homeowner to click than the ad you ranked number 1 earlier.  You should use your understanding of homeowner fears and worries, along with their hopes for success to make the copy emotionally engaging.
+        Now using all your knowledge about {business_name}, their page content:```{content}``` , ads that have succeeded for other advertisers and competitor ads, you are to take on the role of Google Ads copywriter.  You are highly experienced and understand how to use emotion, urgency, calls to action, and other direct response mechanisms.  Your job is to write ad copy with the goal of being more likely to get the homeowner to click than the competitor ad you ranked number 1 earlier.  You should use your understanding of {industry} fears and worries, along with their hopes for success to make the copy emotionally engaging.
 
         The ads you create will be shown to the user in the format:
         Headline 1 - Headline 2 - Headline 3 (optional)
@@ -477,9 +506,9 @@ class OpenAIService:
         """
 
         try:
-            print("Calling OpenAI API: Step 11 - Start")
+            print("Calling OpenAI API: Step 12 - Start")
             response = self.__get_completion(prompt, temperature=0)
-            print("Calling OpenAI API: Step 11 - End")
+            print("Calling OpenAI API: Step 12 - End")
             return response
         except openai.error.RateLimitError:
             return "Facing rate limit quota issue. Please try again later."
@@ -488,9 +517,9 @@ class OpenAIService:
 
 
     
-    def run_step_12(self, keyword):
+    def run_step_13(self, keyword):
         """
-        Runs step 12 of the process.
+        Runs step 13 of the process.
 
         Args:
             keyword (str): The keyword to be used in the generated headlines.
@@ -510,18 +539,18 @@ class OpenAIService:
         """
 
         try:
-            print("Calling OpenAI API: Step 12 - Start")
+            print("Calling OpenAI API: Step 13 - Start")
             response = self.__get_completion(prompt, temperature=0)
-            print("Calling OpenAI API: Step 12 - End")
+            print("Calling OpenAI API: Step 13 - End")
             return response
         except openai.error.RateLimitError:
             return "Facing rate limit quota issue. Please try again later."
         except Exception as ex:
             return str(ex)
     
-    def run_step_13(self):
+    def run_step_14(self):
         """
-        Runs step 13 of the process.
+        Runs step 14 of the process.
 
         Returns:
             str: The generated response for step 13.
@@ -532,9 +561,9 @@ class OpenAIService:
         """
 
         try:
-            print("Calling OpenAI API: Step 13 - Start")
+            print("Calling OpenAI API: Step 14 - Start")
             response = self.__get_completion(prompt, temperature=0)
-            print("Calling OpenAI API: Step 13 - End")
+            print("Calling OpenAI API: Step 14 - End")
             return response
         except openai.error.RateLimitError:
             return "Facing rate limit quota issue. Please try again later."
@@ -599,29 +628,36 @@ if __name__ == "__main__":
     keyword_name = "Property Management"
     search_term = "Property Management"
 
-    #For showing the rows coming from xl sheets
-    langchain_service.show_similiar_ads(keyword_name)
-
-    #Getting the rows in actual formate need to send int the prompt 10
-    similiar_ads = langchain_service.get_similiar_ads(keyword_name)
-    formatted_ads = ''
-    for index, ads in enumerate(similiar_ads):
-        formatted_ads += f"Ads:{index + 1} {ads['headline']}\n{ads['description']}\n"
-
-    print(formatted_ads)
-    #If formatted ads empty then add your own competitors ads
-    step_10_result = openai_service.run_step_10("client",search_term, formatted_ads)
+    #Add competitors ads
+    competitors_ads = []
+    step_10_result = openai_service.run_step_10("client",search_term, competitors_ads)
     print(step_10_result)
 
+    #For showing the rows coming from xl sheets
+    langchain_service.show_winning_ads(keyword_name)
+
+    #Getting the rows in actual formate need to send int the prompt 10
+    get_winning_ads = langchain_service.get_winning_ads(keyword_name)
+    winning_ads = ''
+    for index, ads in enumerate(get_winning_ads):
+        winning_ads += f"Ads:{index + 1} {ads['headline']}\n{ads['description']}\n"
+
+    print(winning_ads)
+
     #Step 11
-    step_11_result = openai_service.run_step_11(business_name,summary_lading_page)
+    step_11_result = openai_service.run_step_11(winning_ads)
     print(step_11_result)
 
     #Step 12
-    step_12_result = openai_service.run_step_12("{{KeyWord:{keyword_name}}}")
-    print(step_11_result)
+    industry = 'Property Management'
+    step_12_result = openai_service.run_step_12(business_name,summary_lading_page,industry)
+    print(step_12_result)
 
     #Step 13
-    step_13_result = openai_service.run_step_13()
+    step_13_result = openai_service.run_step_13("{{KeyWord:{keyword_name}}}")
     print(step_13_result)
+
+    #Step 14
+    step_14_result = openai_service.run_step_14()
+    print(step_14_result)
 
