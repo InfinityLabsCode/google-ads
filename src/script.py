@@ -8,6 +8,8 @@ from langchain import OpenAI
 from langchain.agents import create_csv_agent
 from langchain.document_loaders import WebBaseLoader
 from langchain.chains.summarize import load_summarize_chain
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 
 # Get the current directory
 current_dir = os.path.dirname(__file__)
@@ -34,6 +36,7 @@ class LangchainService:
     def __init__(self):
         self.csv_agent = create_csv_agent(OpenAI(temperature=0), file_path , verbose=True)
         self.df = pd.read_csv(file_path)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         pass
 
     def parse_website(self, url):
@@ -68,8 +71,9 @@ class LangchainService:
             str: The summarized content.
         """
         try:
+            docs = self.text_splitter.split_documents(data)
             chain = load_summarize_chain(OpenAI(temperature=0), chain_type="map_reduce")
-            summary = chain.run(data)
+            summary = chain.run(docs)
             return summary
         except openai.error.RateLimitError:
             return "Facing Some Problem in Summarization. Please try later"
@@ -579,8 +583,9 @@ if __name__ == "__main__":
     openai_service = OpenAIService();
 
     # Step 1
-    website_content = langchain_service.parse_website("https://www.greystar.com/")
+    website_content = langchain_service.parse_website("https://ambassadorac.com/south-florida-plumbing-services/")
     summary = langchain_service.summarization(website_content)
+    print(summary)
     step_1_result = openai_service.run_step_1(summary)
     service_or_product = step_1_result
     print(step_1_result)
@@ -605,7 +610,7 @@ if __name__ == "__main__":
     print(step_5_result)
 
     #Step 6
-    landing_page_website_content = langchain_service.parse_website("https://www.greystar.com/business-services/property-management")
+    landing_page_website_content = langchain_service.parse_website("https://ambassadorac.com/south-florida-plumbing-services/")
     summary_lading_page = langchain_service.summarization(landing_page_website_content)
     step_6_result = openai_service.run_step_6(landing_page_website_content,service_or_product)
     print(step_6_result)
